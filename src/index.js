@@ -25,6 +25,15 @@ var Free = Object.create(sum.Either, {
       return x.cata(obj);
     });
   }),
+  cataConst: enumerableValue(function(result, obj) {
+    return this.cata({
+      Of: function(_) { return result; },
+      Join: function(x) { return x.cata(obj); },
+    });
+  }),
+  seq: enumerableValue(function(x) {
+    return this.chain(function(_) { return x;});
+  }),
 });
 
 function Of(x) {
