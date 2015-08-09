@@ -6,6 +6,7 @@ var Catamorphism = require('ce-catamorphism').Catamorphism;
 var Stringify = require('ce-stringify').Stringify;
 var Unit = require('ce-unit').Unit;
 var R = require('ramda');
+var http = require('http');
 
 var value = pbp.value;
 var enumerableGet = pbp.enumerableGet;
@@ -113,6 +114,30 @@ function pureObject(free, res) {
 }
 
 /*
+  We should be able to interpret responses in an http context.
+*/
+function httpResponse(free, res) {
+  return free.goCata({
+    AddHeader: function(header, val, cont) {
+      res.setHeader(header, val);
+      return cont;
+    },
+    RemoveHeader: function(header, cont) {
+      res.removeHeader(header);
+      return cont;
+    },
+    StatusCode: function(code, cont) {
+      res.statusCode = code;
+      return cont;
+    },
+    Body: function(content, cont) {
+      res.write(content);
+      return cont;
+    },
+  });
+}
+
+/*
   Now, let's define a default response object.
 */
 var responseObj = {
@@ -180,3 +205,13 @@ console.log(pureObject(script3, responseObj));
 var responseObj2 = pureObject(script2, responseObj);
 var responseObj3 = pureObject(script3, responseObj);
 console.log(R.equals(responseObj2, responseObj3));
+
+/*
+  And of course we should be able to run an http server.
+*/
+function handle(req, res) {
+  httpResponse(json({text: 'Hello World!'}), res);
+  res.end();
+}
+var server = http.createServer(handle);
+server.listen(8080);
