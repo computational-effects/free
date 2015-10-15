@@ -5,6 +5,7 @@ var mixins = require('ce-mixin').mixins;
 var Catamorphism = require('ce-catamorphism').Catamorphism;
 var Stringify = require('ce-stringify').Stringify;
 var Unit = require('ce-unit').Unit;
+var O = require('ce-option');
 var R = require('ramda');
 var http = require('http');
 
@@ -117,7 +118,8 @@ function pureObject(free, res) {
   We should be able to interpret responses in an http context.
 */
 function httpResponse(free, res) {
-  return free.goCata({
+  var content = O.None;
+  var result = free.goCata({
     AddHeader: function(header, val, cont) {
       res.setHeader(header, val);
       return cont;
@@ -130,11 +132,16 @@ function httpResponse(free, res) {
       res.statusCode = code;
       return cont;
     },
-    Body: function(content, cont) {
-      res.write(content);
+    Body: function(body, cont) {
+      content = O.Some(body);
       return cont;
     },
   });
+  content.cata({
+    None: function() {},
+    Some: res.write.bind(res),
+  });
+  return result;
 }
 
 /*
@@ -210,7 +217,7 @@ console.log(R.equals(responseObj2, responseObj3));
   And of course we should be able to run an http server.
 */
 function handle(req, res) {
-  httpResponse(json({text: 'Hello World!'}), res);
+  httpResponse(script3, res);
   res.end();
 }
 var server = http.createServer(handle);

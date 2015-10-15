@@ -44,6 +44,9 @@ function Of(x) {
     go: enumerableValue(function(_) {
       return x;
     }),
+    iter: enumerableValue(function(_) {
+      return x;
+    }),
   }));
 };
 
@@ -57,6 +60,11 @@ function Join(x) {
     chain: enumerableValue(underlying('chain')),
     go: enumerableValue(function(f) {
       return f(x).go(f);
+    }),
+    iter: enumerableValue(function(f) {
+      return f(x.map(function(g) {
+        return g.iter(f);
+      }));
     }),
   });
 };
@@ -75,6 +83,10 @@ function goCata(obj, free) {
   return free.goCata(obj);
 }
 
+function iter(f, free) {
+  return free.iter(f);
+}
+
 function liftF(f) {
   return Join(f.map(Of));
 }
@@ -84,6 +96,7 @@ module.exports = {
   FreeDerive: FreeDerive,
   go: go,
   goCata: goCata,
+  iter: iter,
   Join: Join,
   liftF: liftF,
   Of: Of,

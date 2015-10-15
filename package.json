@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "ce-catamorphism": "^1.0.0",
+    "ce-option": "^1.0.0",
     "ce-stringify": "^1.0.1",
     "ce-unit": "^1.0.0",
     "ramda": "^0.17.1"
