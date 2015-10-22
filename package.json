@@ -1,5 +1,5 @@
 {
-  "name": "ce-free",
+  "name": "@ce/free",
   "version": "1.1.0",
   "description": "Computational effects - Free Monad",
   "main": "src/index.js",
@@ -14,15 +14,15 @@
   "author": "Hardy Jones <jones3.hardy@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "ce-mixin": "^1.0.3",
-    "ce-sum": "^1.0.1",
-    "pbp": "^1.1.0"
+    "@ce/mixin": "^1.0.3",
+    "@ce/sum": "^1.0.1",
+    "@ce/pbp": "^1.1.0"
   },
   "devDependencies": {
-    "ce-catamorphism": "^1.0.0",
-    "ce-option": "^1.0.0",
-    "ce-stringify": "^1.0.1",
-    "ce-unit": "^1.0.0",
+    "@ce/catamorphism": "^1.0.0",
+    "@ce/option": "^1.0.0",
+    "@ce/stringify": "^1.0.1",
+    "@ce/unit": "^1.0.0",
     "ramda": "^0.17.1"
   }
 }
