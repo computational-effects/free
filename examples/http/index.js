@@ -1,11 +1,11 @@
 'use strict';
 
-var pbp = require('pbp');
-var mixins = require('ce-mixin').mixins;
-var Catamorphism = require('ce-catamorphism').Catamorphism;
-var Stringify = require('ce-stringify').Stringify;
-var Unit = require('ce-unit').Unit;
-var O = require('ce-option');
+var pbp = require('@ce/pbp');
+var mixins = require('@ce/mixin').mixins;
+var Catamorphism = require('@ce/catamorphism').Catamorphism;
+var Stringify = require('@ce/stringify').Stringify;
+var Unit = require('@ce/unit').Unit;
+var O = require('@ce/option');
 var R = require('ramda');
 var http = require('http');
 

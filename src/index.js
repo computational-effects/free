@@ -1,8 +1,8 @@
 'use strict';
 
-var pbp = require('pbp');
-var sum = require('ce-sum');
-var mixin = require('ce-mixin').mixin;
+var pbp = require('@ce/pbp');
+var sum = require('@ce/sum');
+var mixin = require('@ce/mixin').mixin;
 
 var enumerableGet = pbp.enumerableGet;
 var enumerableValue = pbp.enumerableValue;
